@@ -3,7 +3,7 @@
 ## Objective 
 The objective of this project is to build a compatibility-based "FriendFinder" application. This is a full-stack site that will take in results from the users survey. After it will compare their users ansers with other surveys from other users. The app should display the name and picture of the user that they matched!
 
-Deployed on Heroku:  https://young-woodland-48628.herokuapp.com/
+Deployed on Heroku: [https://young-woodland-48628.herokuapp.com/]
 
 ## Steps to run app on local server
 - npm install
