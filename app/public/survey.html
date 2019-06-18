@@ -31,7 +31,7 @@
           <input type="text" class="form-control" id="name" required="">
         </div>
         <div class="form-group">
-          <label for="pwd">Link to Photo Image (Required):</label>
+          <label for="photo">Link to Photo Image (Required):</label>
           <input type="text" id="photo" class="form-control" required="">
         </div>
 
@@ -49,7 +49,7 @@
         </select>
 
         <h3>Question 2</h3>
-        <h5>Your mind is always buzzing with unexplored ideas and plans.</h5>
+        <h5>Generally speaking, you rely more on your experience than your imagination</h5>
         <select class="select" id="q2">
           <option value=""></option>
           <option value="1">1 (Strongly Disagree)</option>
@@ -60,7 +60,7 @@
         </select>
 
         <h3>Question 3</h3>
-        <h5>Your mind is always buzzing with unexplored ideas and plans.</h5>
+        <h5>You rarely do something just out of sheer curiosity.</h5>
         <select class="select" id="q3">
           <option value=""></option>
           <option value="1">1 (Strongly Disagree)</option>
@@ -71,7 +71,7 @@
         </select>
 
         <h3>Question 4</h3>
-        <h5>Your mind is always buzzing with unexplored ideas and plans.</h5>
+        <h5>It is often difficult for you to relate to other people’s feelings.</h5>
         <select class="select" id="q4">
           <option value=""></option>
           <option value="1">1 (Strongly Disagree)</option>
@@ -82,7 +82,7 @@
         </select>
 
         <h3>Question 5</h3>
-        <h5>Your mind is always buzzing with unexplored ideas and plans.</h5>
+        <h5>You feel more energetic after spending time with a group of people.</h5>
         <select class="select" id="q5">
           <option value=""></option>
           <option value="1">1 (Strongly Disagree)</option>
@@ -93,7 +93,7 @@
         </select>
 
         <h3>Question 6</h3>
-        <h5>Your mind is always buzzing with unexplored ideas and plans.</h5>
+        <h5>In a discussion, truth should be more important than people’s sensitivities.</h5>
         <select class="select" id="q6">
           <option value=""></option>
           <option value="1">1 (Strongly Disagree)</option>
@@ -104,7 +104,7 @@
         </select>
 
         <h3>Question 7</h3>
-        <h5>Your mind is always buzzing with unexplored ideas and plans.</h5>
+        <h5>You think that everyone’s views should be respected regardless of whether they are supported by facts or not.</h5>
         <select class="select" id="q7">
           <option value=""></option>
           <option value="1">1 (Strongly Disagree)</option>
@@ -115,7 +115,7 @@
         </select>
 
         <h3>Question 8</h3>
-        <h5>Your mind is always buzzing with unexplored ideas and plans.</h5>
+        <h5>You find it easy to stay relaxed and focused even when there is some pressure.</h5>
         <select class="select" id="q8">
           <option value=""></option>
           <option value="1">1 (Strongly Disagree)</option>
@@ -126,7 +126,7 @@
         </select>
 
         <h3>Question 9</h3>
-        <h5>Your mind is always buzzing with unexplored ideas and plans.</h5>
+        <h5>People can rarely upset you.</h5>
         <select class="select" id="q9">
           <option value=""></option>
           <option value="1">1 (Strongly Disagree)</option>
@@ -137,7 +137,7 @@
         </select>
 
         <h3>Question 10</h3>
-        <h5>Your mind is always buzzing with unexplored ideas and plans.</h5>
+        <h5>You rarely get carried away by fantasies and ideas.</h5>
         <select class="select" id="q10">
           <option value=""></option>
           <option value="1">1 (Strongly Disagree)</option>
@@ -156,8 +156,8 @@
     <footer class="footer">
       <div class="container">
         <p>
-          <a href="/api/tables">API Table Link</a> |
-          <a href="https://japerez107.github.io/friendsconnect/">Github</a>
+          <p><a href="/api/survey">API Friend Link</a> | <a
+              href="https://japerez107.github.io/friendsconnect/">Github</a>
       </div>
     </footer>
 
@@ -167,41 +167,58 @@
 
 </html>
 
-<!-- BELOW CODE IS CRITICAL. IT HANDLES HOW FORM DATA IS SENT TO OUR SERVER -->
 <script type="text/javascript">
-  // In this code below we create the Front-end JavaScript which "POSTS" our form data to our express server.
-  // In essence, when the user hits submit, jQuery grabs all of the fields then sends a post request to our api
-  // Our api recognizes the route (/api/tables)... and then runs the associated code (found in api-routes.js).
-  // In this case the associated code "saves" the data to the table-data.js file or waitinglist-data.js file
+
   $(".submit").on("click", function (event) {
     event.preventDefault();
+
     // Here we grab the form elements
-    var newfriends = {
-      customerName: $("#reserve-name").val().trim(),
-      phoneNumber: $("#reserve-phone").val().trim(),
-      customerEmail: $("#reserve-email").val().trim(),
-      customerID: $("#reserve-unique-id").val().trim()
+    var newFriend = {
+      name: $("#name").val().trim(),
+      photo: $("#photo").val().trim(),
+      scores: [
+        $("#q1").val().trim(),
+        $("#q2").val().trim(),
+        $("#q3").val().trim(),
+        $("#q4").val().trim(),
+        $("#q5").val().trim(),
+        $("#q6").val().trim(),
+        $("#q7").val().trim(),
+        $("#q8").val().trim(),
+        $("#q9").val().trim(),
+        $("#q10").val().trim()
+      ]
     };
-    console.log(newfriends);
-    // This line is the magic. It"s very similar to the standard ajax function we used.
-    // Essentially we give it a URL, we give it the object we want to send, then we have a "callback".
-    // The callback is the response of the server. In our case, we set up code in api-routes that "returns" true or false
-    // depending on if a tables is available or not.
-    $.post("/api/tables", newfriends,
+
+    $.post("/api/survey", newFriend,
       function (data) {
+
         // If a table is available... tell user they are booked.
         if (data) {
           alert("Yay! You are officially booked!");
         }
+
         // If a table is available... tell user they on the waiting list.
         else {
           alert("Sorry you are on the wait list");
         }
+
         // Clear the form when submitting
-        $("#reserve-name").val("");
-        $("#reserve-phone").val("");
-        $("#reserve-email").val("");
-        $("#reserve-unique-id").val("");
+        $(".name").val("");
+        $(".photo").val("");
+        $(".q1").val("");
+        $(".q2").val("");
+        $(".q3").val("");
+        $(".q4").val("");
+        $(".q5").val("");
+        $(".q6").val("");
+        $(".q7").val("");
+        $(".q8").val("");
+        $(".q9").val("");
+        $(".q10").val("");
+
       });
+
   });
+
 </script>
