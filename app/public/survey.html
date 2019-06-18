@@ -149,7 +149,7 @@
         </select>
         <br>
         <br>
-        <button type="submit" class="btn btn-primary btn-lg btn-block submit">Submit</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block submit" data-toggle=".modal" data-target="#searchModal">Submit</button>
 
       </div>
     </div>
@@ -164,24 +164,25 @@
 
   </div>
 
-  <div class="modal" tabindex="-1" role="dialog" id="modal">
-    <div class="modal-dialog" role="document">
+  <div class="modal" id="modalSubmit" tabindex="-1" role="dialog" aria-labelledby="modalSubmitLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">New Friend Logged</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>New Friend Info Posted To API</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+          <div class="modal-header">
+              <h5 class="modal-title" id="modalSubmitLabel">New Friend Info Posted</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+                   New Friend Info Processing... 
+          </div>
+          <div class="modal-footer">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              
+          </div>
       </div>
-    </div>
+  </div>
   </div>
 
 
@@ -208,11 +209,11 @@
         ]
       };
 
-      $.post("/api/survey", newFriend,
-        function (data) {
-
-          $('#modal').modal('open');
-
+      $.post("/api/survey", newFriend),
+      (function () {
+          // this is where the modal jquery is supposed to go but it is not working/popping up 
+          
+          
         });
     });
 
